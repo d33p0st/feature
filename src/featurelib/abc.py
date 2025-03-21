@@ -35,6 +35,7 @@ class metaclass(abc.ABCMeta):
     def __new__(mcls, name, bases, namespace, /, **kwargs):
 
         is_endpoint = kwargs.pop('endpoint', False)
+        is_abstract = kwargs.pop('abstract', False)
 
         # @filter out any direct 'feature' base classes when a class
         # - already inherits from a 'feature' subclass.
@@ -48,7 +49,7 @@ class metaclass(abc.ABCMeta):
         cls = super().__new__(mcls, name, bases, namespace, **kwargs)
         
         # @register feature (but not `feature` class itself or endpoint classes)
-        if name != 'feature' and not namespace.get('_abstract_feature', False) and is_endpoint:
+        if name != 'feature' and not namespace.get('_abstract_feature', False) and not is_endpoint and not is_abstract:
             mcls._feature_registry[name] = cls
 
             # @set feature_name and feature_dependencies
@@ -127,22 +128,7 @@ class feature(abc.ABC, metaclass=metaclass):
         )
 
 
-# @a decorator to set a class as final implementation
-# - to enable the class to be able to define an __init__
-# - method.
-
-# def endpoint(cls):
-#     # cls._is_feature_endpoint = True
-#     setattr(cls, '_is_feature_endpoint', True)
-#     return cls
-
-
-# @a decorator to create an abstract feature
-def abstract(cls):
-    cls._abstract_feature = True
-    return cls
-
-abstract_fmethod = abc.abstractmethod
+abstract = abc.abstractmethod
 
 
 # @a decorator that marks a method as requiring a certain features

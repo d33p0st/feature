@@ -123,24 +123,7 @@ class feature(abc.ABC, metaclass=metaclass):
 CLASS = typing.TypeVar('CLASS')
 
 
-def abstract(feat: CLASS) -> CLASS:
-    """This decorator marks a feature as abstract, preventing it from being
-    registered and can be used as a blueprint to implement sub-features.
-    
-    Usage:
-    ```python
-    @abstract
-    class IOFeature(feature):
-        @abstract_fmethod
-        def read(self) -> bytes: pass
-
-        @abstract_fmethod
-        def write(self, data: bytes) -> int: pass
-    ```
-    """
-
-
-abstract_fmethod = abc.abstractmethod
+abstract = abc.abstractmethod
 
 
 _FeatureType: typing.TypeAlias = typing.Type[feature]
