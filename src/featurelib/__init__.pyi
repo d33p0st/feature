@@ -5,7 +5,7 @@ to encourage better readability, extensibility, management and handling
 of large or any code base.
 """
 
-from .abc import feature, endpoint, abstract, abstract_fmethod, requires, optimize
+from .abc import feature, abstract, abstract_fmethod, requires, optimize
 
-__all__ = ['feature', 'endpoint', 'abstract',
+__all__ = ['feature', 'abstract',
            'abstract_fmethod', 'requires', 'optimize']
