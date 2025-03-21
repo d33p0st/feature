@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "featurelib"
-version = "0.0.4"
+version = "0.0.5"
 description = "Separate complicated functionality from your class"
 requires-python = ">=3.8"
 readme = {file = "README.md", content-type = "text/markdown"}
