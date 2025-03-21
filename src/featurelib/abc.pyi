@@ -89,11 +89,10 @@ class feature(abc.ABC, metaclass=metaclass):
     Note that all the above classes cannot define a `__init__` method.
     For the final endpoint class which will inherit a number of features
     and has the final code that does something, use the `endpoint`
-    decorator.
+    keyword argument while class definition.
 
     ```python
-    @endpoint
-    class Main(Logging, Printing, TerminalLogger):
+    class Main(Logging, Printing, TerminalLogger, endpoint=True):
         def __init__(self) -> None: ... # valid
     ```
     """
@@ -105,7 +104,7 @@ class feature(abc.ABC, metaclass=metaclass):
     def __init__(self) -> None:
         """If this is a class that inherits from `feature` abstract class
         directly or indirectly and does not contain the `endpoint`
-        decorator, will raise a `TypeError`."""
+        keyword argument, will raise a `TypeError`."""
 
     @classmethod
     def dependencies(cls, type: typing.Literal['self', 'all'] = 'self') -> typing.Set[str]:
@@ -122,11 +121,6 @@ class feature(abc.ABC, metaclass=metaclass):
 
 
 CLASS = typing.TypeVar('CLASS')
-
-
-def endpoint(cls: CLASS) -> CLASS:
-    """This decorator marks any class that inherits one or more features as the
-    final endpoint and enables it to define a __init__ method."""
 
 
 def abstract(feat: CLASS) -> CLASS:
@@ -196,10 +190,160 @@ def feature_info() -> AllFeaturesInfo:
     """Get information about all features that are registered."""
 
 
-_f = typing.TypeVar('_f', bound=feature)
+_cls_1 = typing.TypeVar('_cls_1')
+_cls_2 = typing.TypeVar('_cls_2')
+_cls_3 = typing.TypeVar('_cls_3')
+_cls_4 = typing.TypeVar('_cls_4')
+_cls_5 = typing.TypeVar('_cls_5')
+_cls_6 = typing.TypeVar('_cls_6')
+_cls_7 = typing.TypeVar('_cls_7')
+_cls_8 = typing.TypeVar('_cls_8')
+_cls_9 = typing.TypeVar('_cls_9')
+_cls_10 = typing.TypeVar('_cls_10')
 
 
-def optimize(*classes: _f) -> typing.Tuple[_f]:
+@typing.overload
+def optimize(cls1: _cls_1, /) -> typing.Tuple[_cls_1]:
+    """Optimizes the inheritence order to minimize MRO conflicts.
+    
+    Uses a topological sort based on Kahn's algorithm to ensure a valid
+    linearization of the inheritence hierarchy.
+
+    Usage:
+    ```python
+    class SomeClass(*optimize(feature1, feature1, ...AnyClassHere)): pass
+    ```
+    """
+
+
+@typing.overload
+def optimize(cls1: _cls_1, cls2: _cls_2, /) -> typing.Tuple[_cls_1, _cls_2]:
+    """Optimizes the inheritence order to minimize MRO conflicts.
+    
+    Uses a topological sort based on Kahn's algorithm to ensure a valid
+    linearization of the inheritence hierarchy.
+
+    Usage:
+    ```python
+    class SomeClass(*optimize(feature1, feature1, ...AnyClassHere)): pass
+    ```
+    """
+
+
+@typing.overload
+def optimize(cls1: _cls_1, cls2: _cls_2, cls3: _cls_3, /) -> typing.Tuple[_cls_1, _cls_2, _cls_3]:
+    """Optimizes the inheritence order to minimize MRO conflicts.
+    
+    Uses a topological sort based on Kahn's algorithm to ensure a valid
+    linearization of the inheritence hierarchy.
+
+    Usage:
+    ```python
+    class SomeClass(*optimize(feature1, feature1, ...AnyClassHere)): pass
+    ```
+    """
+
+
+@typing.overload
+def optimize(cls1: _cls_1, cls2: _cls_2, cls3: _cls_3, cls4: _cls_4, /) -> typing.Tuple[_cls_1, _cls_2, _cls_3, _cls_4]:
+    """Optimizes the inheritence order to minimize MRO conflicts.
+    
+    Uses a topological sort based on Kahn's algorithm to ensure a valid
+    linearization of the inheritence hierarchy.
+
+    Usage:
+    ```python
+    class SomeClass(*optimize(feature1, feature1, ...AnyClassHere)): pass
+    ```
+    """
+
+
+@typing.overload
+def optimize(cls1: _cls_1, cls2: _cls_2, cls3: _cls_3, cls4: _cls_4, cls5: _cls_5, /) -> typing.Tuple[_cls_1, _cls_2, _cls_3, _cls_4, _cls_5]:
+    """Optimizes the inheritence order to minimize MRO conflicts.
+    
+    Uses a topological sort based on Kahn's algorithm to ensure a valid
+    linearization of the inheritence hierarchy.
+
+    Usage:
+    ```python
+    class SomeClass(*optimize(feature1, feature1, ...AnyClassHere)): pass
+    ```
+    """
+
+
+@typing.overload
+def optimize(cls1: _cls_1, cls2: _cls_2, cls3: _cls_3, cls4: _cls_4, cls5: _cls_5, cls6: _cls_6, /) -> typing.Tuple[_cls_1, _cls_2, _cls_3, _cls_4, _cls_5, _cls_6]:
+    """Optimizes the inheritence order to minimize MRO conflicts.
+    
+    Uses a topological sort based on Kahn's algorithm to ensure a valid
+    linearization of the inheritence hierarchy.
+
+    Usage:
+    ```python
+    class SomeClass(*optimize(feature1, feature1, ...AnyClassHere)): pass
+    ```
+    """
+
+
+@typing.overload
+def optimize(cls1: _cls_1, cls2: _cls_2, cls3: _cls_3, cls4: _cls_4, cls5: _cls_5, cls6: _cls_6, cls7: _cls_7, /) -> typing.Tuple[_cls_1, _cls_2, _cls_3, _cls_4, _cls_5, _cls_6, _cls_7]:
+    """Optimizes the inheritence order to minimize MRO conflicts.
+    
+    Uses a topological sort based on Kahn's algorithm to ensure a valid
+    linearization of the inheritence hierarchy.
+
+    Usage:
+    ```python
+    class SomeClass(*optimize(feature1, feature1, ...AnyClassHere)): pass
+    ```
+    """
+
+
+@typing.overload
+def optimize(cls1: _cls_1, cls2: _cls_2, cls3: _cls_3, cls4: _cls_4, cls5: _cls_5, cls6: _cls_6, cls7: _cls_7, cls8: _cls_8, /) -> typing.Tuple[_cls_1, _cls_2, _cls_3, _cls_4, _cls_5, _cls_6, _cls_7, _cls_8]:
+    """Optimizes the inheritence order to minimize MRO conflicts.
+    
+    Uses a topological sort based on Kahn's algorithm to ensure a valid
+    linearization of the inheritence hierarchy.
+
+    Usage:
+    ```python
+    class SomeClass(*optimize(feature1, feature1, ...AnyClassHere)): pass
+    ```
+    """
+
+
+@typing.overload
+def optimize(cls1: _cls_1, cls2: _cls_2, cls3: _cls_3, cls4: _cls_4, cls5: _cls_5, cls6: _cls_6, cls7: _cls_7, cls8: _cls_8, cls9: _cls_9, /) -> typing.Tuple[_cls_1, _cls_2, _cls_3, _cls_4, _cls_5, _cls_6, _cls_7, _cls_8, _cls_9]:
+    """Optimizes the inheritence order to minimize MRO conflicts.
+    
+    Uses a topological sort based on Kahn's algorithm to ensure a valid
+    linearization of the inheritence hierarchy.
+
+    Usage:
+    ```python
+    class SomeClass(*optimize(feature1, feature1, ...AnyClassHere)): pass
+    ```
+    """
+
+
+@typing.overload
+def optimize(cls1: _cls_1, cls2: _cls_2, cls3: _cls_3, cls4: _cls_4, cls5: _cls_5, cls6: _cls_6, cls7: _cls_7, cls8: _cls_8, cls9: _cls_9, cls10: _cls_10, /) -> typing.Tuple[_cls_1, _cls_2, _cls_3, _cls_4, _cls_5, _cls_6, _cls_7, _cls_8, _cls_9, _cls_10]:
+    """Optimizes the inheritence order to minimize MRO conflicts.
+    
+    Uses a topological sort based on Kahn's algorithm to ensure a valid
+    linearization of the inheritence hierarchy.
+
+    Usage:
+    ```python
+    class SomeClass(*optimize(feature1, feature1, ...AnyClassHere)): pass
+    ```
+    """
+
+
+@typing.overload
+def optimize(*classes) -> typing.Tuple[typing.Any, ...]:
     """Optimizes the inheritence order to minimize MRO conflicts.
     
     Uses a topological sort based on Kahn's algorithm to ensure a valid

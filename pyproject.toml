@@ -1,15 +1,14 @@
 [build-system]
-requires = ["setuptools>=42", "wheel"]
+requires = ["setuptools>=75", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "featurelib"
-version = "0.0.2"
+version = "0.0.4"
 description = "Separate complicated functionality from your class"
 requires-python = ">=3.8"
-# dependencies = []
 readme = {file = "README.md", content-type = "text/markdown"}
-license = { file = "LICENSE" }
+license = "MIT"
 authors = [
     {name = "Soumyo Deep Gupta", email = "deep.main.ac@gmail.com"}
 ]
@@ -19,13 +18,16 @@ maintainers = [
 classifiers = [
     "Development Status :: 4 - Beta",
     "Programming Language :: Python :: 3.13",
-    "License :: OSI Approved :: MIT License",
     "Operating System :: MacOS :: MacOS X",
     "Operating System :: POSIX :: Linux",
     'Operating System :: Microsoft :: Windows',
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
 ]
+license-files = ["LICENSE"]
 
 [tool.setuptools.package-data]
-"feature" = ["*.pyi"]
+featurelib = ["*.pyi"]
+
+[tool.setuptools]
+packages = {find = {where = ["src"]}}

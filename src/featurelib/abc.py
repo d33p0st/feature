@@ -33,6 +33,9 @@ class metaclass(abc.ABCMeta):
     # @custom __new__ method to enforce logic as per
     # - requirement.
     def __new__(mcls, name, bases, namespace, /, **kwargs):
+
+        is_endpoint = kwargs.pop('endpoint', False)
+
         # @filter out any direct 'feature' base classes when a class
         # - already inherits from a 'feature' subclass.
         feature_subclasses = [b for b in bases if isinstance(b, metaclass) and b is not feature]
@@ -45,7 +48,7 @@ class metaclass(abc.ABCMeta):
         cls = super().__new__(mcls, name, bases, namespace, **kwargs)
         
         # @register feature (but not `feature` class itself or endpoint classes)
-        if name != 'feature' and not namespace.get('_abstract_feature', False):
+        if name != 'feature' and not namespace.get('_abstract_feature', False) and is_endpoint:
             mcls._feature_registry[name] = cls
 
             # @set feature_name and feature_dependencies
@@ -56,45 +59,13 @@ class metaclass(abc.ABCMeta):
 
             mcls._dependency_graph[name] = cls._feature_dependencies
         
-        if '__init__' in namespace:
-            if not hasattr(mcls, '_contains_init'):
-                mcls._contains_init = []
-            mcls._contains_init.append((cls, name))
+        if '__init__' in namespace and not is_endpoint:
+            raise TypeError(
+                f"class {name} cannot implement __init__ as it is defined as a "
+                "'feature' for some larger final implementation (endpoint)"
+            )
 
-        # @store referece to all classes
-        if not hasattr(mcls, 'references'):
-            mcls.references = []
-        mcls.references.append((cls, name))
-        
         return cls
-    
-    def __init__(mcls, name, bases, attrs):
-        super().__init__(name, bases, attrs)
-        
-        # Check '__init__' in endpoint
-        if hasattr(mcls, '_contains_init'):
-            for cls, cname in mcls._contains_init[:]:
-                if not getattr(cls, '_is_feature_endpoint', False):
-                    raise TypeError(
-                        f"Class {cname} cannot implement __init__ as it is "
-                        "defined as a 'feature' for some larger final "
-                        "implementation (endpoint)."
-                    )
-        
-        # Delete abstract class entry and endpoint class
-        if hasattr(mcls, 'references'):
-            for cls, cname in mcls.references[:]:
-                if getattr(cls, '_abstract_feature', False) or getattr(cls, '_is_feature_endpoint', False):
-                    if hasattr(cls, '_feature_name'):
-                        try: delattr(cls, '_feature_name')
-                        except: pass
-                    if hasattr(cls, '_feature_dependencies'):
-                        try: delattr(cls, '_feature_dependencies')
-                        except: pass
-                    try: del mcls._dependency_graph[cname]
-                    except: pass
-                    try: del mcls._feature_registry[cname]
-                    except: pass
 
     # @method to get all features
     @classmethod
@@ -117,12 +88,6 @@ class feature(abc.ABC, metaclass=metaclass):
     _feature_name: typing.ClassVar[str]
     _feature_dependencies: typing.ClassVar[typing.Set[str]]
     _abstract_feature: typing.ClassVar[bool] = False
-
-    def __new__(cls, *args, **kwargs):
-        print(cls.__name__, cls._is_feature_endpoint)
-        if getattr(cls, '_is_feature_endpoint', False) is False:
-            print(cls.__dict__)
-        return super().__new__(cls, *args, **kwargs)
 
     # @a method to get dependencies
     @classmethod
@@ -166,9 +131,10 @@ class feature(abc.ABC, metaclass=metaclass):
 # - to enable the class to be able to define an __init__
 # - method.
 
-def endpoint(cls):
-    cls._is_feature_endpoint = True
-    return cls
+# def endpoint(cls):
+#     # cls._is_feature_endpoint = True
+#     setattr(cls, '_is_feature_endpoint', True)
+#     return cls
 
 
 # @a decorator to create an abstract feature
