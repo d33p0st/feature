@@ -1,24 +1,11 @@
-`featurelib` contains tools to divide and maintain large code bases while providing better readability and easy extensibility and maintainability.
+[![Downloads](https://static.pepy.tech/badge/featurelib)](https://pepy.tech/project/featurelib)
 
-```python
-from featurelib import feature, endpoint
+Featurelib is a python library containing a collection of carefully designed tools for separating functionality from the main underlying class. It allows creation of Feature classes that are typically different than any normal class in python. A Feature class contains a partial implementation which will then be inherited by the main class for it access it. This severely changes the game-plan for maintaining relatively larger projects by increasing readability and decreasing clutter and at the same time providing a better view over future updates and extensibility.
 
-class Logging(feature):
-    def log(self, msg: str) -> None:
-        # some logic here
+A full comprehensive documentation can be found at [d33p0st.in/docs/featurelib](https://d33p0st.in/docs/featurelib).
 
-    def log_to_terminal(self, msg: str) -> None:
-        # some logic here
+## Installation
 
-
-class Printing(feature):
-    def print(self) -> None:
-        print(self)
-
-
-@endpoint
-class App(Logging, Printing):
-    def __init__(self) -> None:
-        self.log('__init__ method.')
-        self.print()
+```zsh
+pip install featurelib
 ```

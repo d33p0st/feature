@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "featurelib"
-version = "0.0.7"
+version = "1.0.0"
 description = "Separate complicated functionality from your class"
 requires-python = ">=3.8"
 readme = {file = "README.md", content-type = "text/markdown"}
@@ -31,3 +31,7 @@ featurelib = ["*.pyi"]
 
 [tool.setuptools]
 packages = {find = {where = ["src"]}}
+
+[project.urls]
+Documentation = "https://d33p0st.in/docs/featurelib/"
+GitHub = "https://github.com/d33p0st/featurelib"

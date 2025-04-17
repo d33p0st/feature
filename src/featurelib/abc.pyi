@@ -48,7 +48,7 @@ class metaclass(abc.ABCMeta):
     def __new__(mcls, name: str, bases: typing.Tuple[typing.Type, ...], namespace: typing.Dict[str, typing.Any], /, **kwargs): ...
 
     @classmethod
-    def features(mcls) -> typing.Dict[str, typing.Set[str]]:
+    def features(mcls) -> typing.Dict[str, typing.Type]:
         """Returns a comprehensive list of all available features."""
 
     @classmethod

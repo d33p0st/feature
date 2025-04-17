@@ -65,6 +65,9 @@ class metaclass(abc.ABCMeta):
                 f"class {name} cannot implement __init__ as it is defined as a "
                 "'feature' for some larger final implementation (endpoint)"
             )
+        
+        if is_endpoint:
+            cls._is_feature_endpoint = True
 
         return cls
 
@@ -396,6 +399,5 @@ def optimize(*classes):
         return tuple(non_feature_classes + ordered_classes)
 
 
-__all__ = ['metaclass', 'feature', 'endpoint', 'abstract',
-           'abstract_fmethod', 'requires', 'validate_features',
+__all__ = ['metaclass', 'feature', 'requires', 'validate_features',
            'feature_compatibility', 'feature_info', 'optimize']
